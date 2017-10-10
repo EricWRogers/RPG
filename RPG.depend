@@ -7,3 +7,11 @@
 	<stdlib.h>
 	<time.h>
 
+1507651061 source:/home/eric/Git/RPG/Main.cpp
+	<iostream>
+	<fstream>
+	<random>
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+

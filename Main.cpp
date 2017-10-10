@@ -89,6 +89,9 @@ public:
 	void updateMoney(int m) {
 		gold = gold + m;
 	}
+	void updateMagic(int m) {
+		magic = magic + m;
+	}
 	void updateHealth(int h) {
 		health = health + h;
 	}
@@ -258,6 +261,7 @@ int main() {
 					}else{
                         cout << "You were hurt badly but you have learned a better way to fight" << endl;
                         p.updateAttack(1);
+                        p.updateMagic(1);
                         p.updateHealth(-3);
 					}
 				}
@@ -297,7 +301,6 @@ int main() {
 		}
 		//Shop
 		while (p.is == 3) {
-			if(p.gold)
 			cout << "\n\n\n\n|Welcome To My Shop| \n +1 to Attack for 10 Gold: (1) \n Fully Restore Health For 20 Gold: (2) \n +1 To Max Health For 40 Gold: (3) \n Sorry I forgot My Money: (4)" << endl; cin >> r;
 			switch (r) {
 			case '1':
@@ -348,7 +351,7 @@ int main() {
 		}
 		//Food Market
 		while (p.is == 4) {
-
+            p.is = 2;
 		}
 		//Inn
 		while (p.is == 5) {
