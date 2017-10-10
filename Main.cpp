@@ -250,11 +250,15 @@ int main() {
 						p.updateHealth(dTaken);
 					}
 				}
-				else {
+				if(r == '2') {
 					if (p.attack > 5 || p.magic > 7) {
 						cout << "You Won!!!! Joy +1 Food +1" << endl;
 						p.updateFood(+1);
 						p.updateStamina(-1);
+					}else{
+                        cout << "You were hurt badly but you have learned a better way to fight" << endl;
+                        p.updateAttack(1);
+                        p.updateHealth(-3);
 					}
 				}
 				break;
