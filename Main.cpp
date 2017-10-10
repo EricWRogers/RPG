@@ -13,7 +13,6 @@ public:
 	int timeTraveling = 0;
 	int time = 6;
 	int day = 0;
-
 	//player stats
 	int health = 0;
 	int mHealth = 0;
@@ -26,16 +25,11 @@ public:
 	int mStamina = 24;
 	int stamina = 15;
 	char playerName[50];
-
 	//inventory
 	int hog = 0;
 
-
-
-
 	void setStats(int a, int h, int mH, int g, int f, int j, int s, int m) {
 		attack = a; health = h; mHealth = mH; gold = g; food = f; stamina = j; stealth = s; magic = m;
-
 	}
 
 	void getStats() {
@@ -154,20 +148,6 @@ int main() {
 	int goldRoll;
 	int runRoll;
 
-	struct Employee
-	{
-		short id;
-		int age;
-		double wage;
-	}; Employee joe, frank;
-
-	joe.id = 14;
-	joe.age = 24;
-	joe.wage = 24.95;
-
-	frank.id = 14;
-	frank.age = 32;
-	frank.wage = 18.50;
 
 	cout << "Would you like to play a game? New: (1) or continue: (2) " << endl;cin >> r;
 	if (r == '2') {
@@ -177,9 +157,9 @@ int main() {
 	else {
 		cout << "Please enter your name: ";cin >> p.playerName;
 		cout << "|Charater select| Warrior: (1) Elf: (2) Mage: (3) " << endl;cin >> r;
-		if (r == '1') {p.setStats(5, 20, 0, 0, 1, 3, 3);p.getStats();}
-		else if (r == '2') {p.setStats(7, 15, 0, 0, 3, 7, 5);p.getStats();}
-		else if (r == '3') {p.setStats(3, 10, 0, 0, 2, 3, 7);p.getStats();
+		if (r == '1') {p.setStats(5, 20, 20, 0, 0, 1, 3, 3);p.getStats();}
+		else if (r == '2') {p.setStats(7, 15, 15, 0, 0, 3, 7, 5);p.getStats();}
+		else if (r == '3') {p.setStats(3, 10, 10, 0, 0, 2, 3, 7);p.getStats();
 		}
 	}
 
@@ -327,21 +307,36 @@ int main() {
 		//Shop
 		while (p.is == 3) {
 			if(p.gold )
-			cout << "\n\n\n\n|Welcome To My Shop| \n +1 to Attack for 10 Gold: (1) \n +1 To Max Health For 50 Gold: (2) \n Sorry I forgot My Money: (3)" << endl; cin >> r;
+			cout << "\n\n\n\n|Welcome To My Shop| \n +1 to Attack for 10 Gold: (1) \n Fully Restore Health For 20 Gold: (2) \n +1 To Max Health For 40 Gold: (3) \n Sorry I forgot My Money: (4)" << endl; cin >> r;
 			switch (r) {
 			case '1':
+                if(p.gold < 10)
+                {
+                    cout << "Sorry Sir, you do not have enough gold" << endl;
+                    break;
+                }
 				cout << "(-10 Gold) +1 to Attack" << endl;
 				p.updateMoney(-10);
 				p.updateAttack(1);
 				p.getStats();
 				break;
 			case '2':
-				cout << "(-20 Gold) +1 to Health" << endl;
+                if(p.gold < 20)
+                {
+                    cout << "Sorry Sir, you do not have enough gold" << endl;
+                    break;
+                }
+				cout << "(-20 Gold) Healed" << endl;
 				p.updateMoney(-20);
-				p.updateHealth(1);
+				p.resetHealth();
 				p.getStats();
 				break;
 			case '3':
+                if(p.gold < 40)
+                {
+                    cout << "Sorry Sir, you do not have enough gold" << endl;
+                    break;
+                }
 				cout << "(-40 Gold) +1 to Max Health" << endl;
 				p.updateMoney(-40);
 				p.updateMaxHealth(1);
