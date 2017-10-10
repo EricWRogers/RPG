@@ -31,7 +31,6 @@ public:
 	void setStats(int a, int h, int mH, int g, int f, int j, int s, int m) {
 		attack = a; health = h; mHealth = mH; gold = g; food = f; stamina = j; stealth = s; magic = m;
 	}
-
 	void getStats() {
 		cout << playerName << "'s " /*<< "Doing " << state[is] */<< " Gold: " << gold << " Food: " << food << " Stamina: " << stamina <<endl;
 		cout <<"Attack: " << attack << " Magic: " << magic << " Health: " << health << " Stealth: " << stealth << endl;
@@ -39,7 +38,6 @@ public:
 		saveFile();
 		//gameStart();
 	}
-
 	void saveFile() {
 		ofstream psf;
 		psf.open("playerSaveFile.dat");
@@ -58,7 +56,6 @@ public:
 
 		psf.close();
 	}
-
 	void loadSave() {
 		ifstream psf;
 		psf.open("playerSaveFile.dat");
@@ -89,7 +86,6 @@ public:
 
 		psf.close();
 	}
-
 	void updateMoney(int m) {
 		gold = gold + m;
 	}
@@ -110,6 +106,9 @@ public:
 	}
 	void updateStamina(int j) {
 		stamina = stamina + j;
+	}
+	void resetStamina(){
+        stamina = mStamina;
 	}
 	void updatemStamina(int j) {
 		mStamina = mStamina + j;
@@ -135,20 +134,15 @@ int rollDice(int max, int min) {
 	return dice;
 }
 int main() {
-
 	srand(time(NULL));
 	Player p;
-
 	char r;
-
 	bool game = true;
-
 	int dTaken;
 	int diceRoll;
 	int goldRoll;
 	int runRoll;
-
-
+    //Startup
 	cout << "Would you like to play a game? New: (1) or continue: (2) " << endl;cin >> r;
 	if (r == '2') {
 		p.loadSave();
@@ -162,14 +156,10 @@ int main() {
 		else if (r == '3') {p.setStats(3, 10, 10, 0, 0, 2, 3, 7);p.getStats();
 		}
 	}
-
-
-
 	while (p.health > 0) {
 		//getchar();
 		//Traveling(0)Town(1)Shop(2)Food Market(3) inn(4)
 		cout << "Day: " << p.day << "Time: " << p.time << ":00 " << endl;
-
 		//Hud
 		while (p.is == 0) {
 			cout << "|"<< p.playerName<<"'s text based adventure|\n Travel: (1)\n Eat and Rest: (2)\n Setup Camp: (3)" << endl; cin >> r;
@@ -185,7 +175,6 @@ int main() {
 				break;
 			}
 		}
-
 		//Traveling
 		while (p.is == 1) {
 			diceRoll = rollDice(20, 1);
@@ -284,7 +273,6 @@ int main() {
 				p.is = 0;
 			}
 		}
-
 		//Town
 		while (p.is == 2) {
 			cout << "|Entered into Town| You may look or a shop: (1) Food Market: (2) inn: (3) or \nPress any key to leave Town" << endl; cin >> r;
@@ -303,10 +291,9 @@ int main() {
 				break;
 			}
 		}
-
 		//Shop
 		while (p.is == 3) {
-			if(p.gold )
+			if(p.gold)
 			cout << "\n\n\n\n|Welcome To My Shop| \n +1 to Attack for 10 Gold: (1) \n Fully Restore Health For 20 Gold: (2) \n +1 To Max Health For 40 Gold: (3) \n Sorry I forgot My Money: (4)" << endl; cin >> r;
 			switch (r) {
 			case '1':
@@ -344,7 +331,7 @@ int main() {
 				break;
 			default:
 				//Back to Town
-				p.is = 1;
+				p.is = 2;
 				break;
 			}
 			if (p.time <= 24) {
@@ -355,19 +342,30 @@ int main() {
 				p.day++;
 			}
 		}
-
 		//Food Market
 		while (p.is == 4) {
 
 		}
-
 		//Inn
 		while (p.is == 5) {
-
+            cout << "\n\n\n\n|Welcome To My Inn|\n Your stamina: "<< p.stamina <<" \n Stay and rest For 1 gold (1) \n I've rested enough (2)" << endl; cin >> r;
+            switch (r){
+            case '1':
+                if(p.gold < 1)
+                {
+                    cout << "Sorry Sir, you do not have enough gold" << endl;
+                    break;
+                }
+                cout << "your is maxedout" << endl;
+                p.resetStamina();
+                break;
+                default:
+				//Back to Town
+				p.is = 2;
+				break;
+            }
 		}
-
 		//Fight
-
 		if (p.time <= 24) {
 			p.time++;
 		}
